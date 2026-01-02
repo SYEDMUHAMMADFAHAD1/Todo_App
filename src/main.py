@@ -34,10 +34,10 @@ def main():
         elif choice == '5':
             toggle_task_status_menu()
         elif choice == '6':
-            print("Goodbye!")
+            print("👋 Program exited successfully")
             break
         else:
-            print("Invalid choice. Please try again.")
+            print("⚠️ Invalid option, please try again")
 
 
 def add_task_menu():
@@ -50,7 +50,10 @@ def add_task_menu():
     description = input("Enter task description (optional): ").strip()
 
     result = task_manager.add_task(title, description)
-    print(result["message"])
+    if result["success"]:
+        print("✅ Task saved successfully")
+    else:
+        print(f"❌ Error: {result['message']}")
 
 
 def view_tasks_menu():
@@ -58,13 +61,14 @@ def view_tasks_menu():
     tasks = task_manager.view_tasks()
 
     if not tasks:
-        print("No tasks available.")
+        print("ℹ️ No tasks available")
         return
 
     print("\nYour Tasks:")
     for i, task in enumerate(tasks, 1):
         status = "✓" if task.completed else "○"
         print(f"{i}. [{status}] {task.title} - {task.description} (ID: {task.id})")
+    print("📋 Tasks loaded successfully")
 
 
 def update_task_menu():
@@ -91,7 +95,10 @@ def update_task_menu():
         description = None
 
     result = task_manager.update_task(task_id, title, description)
-    print(result["message"])
+    if result["success"]:
+        print("✏️ Task updated successfully")
+    else:
+        print(f"❌ Error: {result['message']}")
 
 
 def delete_task_menu():
@@ -103,7 +110,10 @@ def delete_task_menu():
 
     task_id = input("\nEnter the task ID to delete: ").strip()
     result = task_manager.delete_task(task_id)
-    print(result["message"])
+    if result["success"]:
+        print("🗑️ Task deleted successfully")
+    else:
+        print(f"❌ Error: {result['message']}")
 
 
 def toggle_task_status_menu():
@@ -115,7 +125,10 @@ def toggle_task_status_menu():
 
     task_id = input("\nEnter the task ID to toggle: ").strip()
     result = task_manager.toggle_task_status(task_id)
-    print(result["message"])
+    if result["success"]:
+        print("🔁 Task status updated successfully")
+    else:
+        print(f"❌ Error: {result['message']}")
 
 
 if __name__ == "__main__":
